@@ -25,7 +25,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
           Cerrar sesión
         </button>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-4">{children}</main>
+      <main className="mx-auto max-w-5xl px-4 py-4 xl:max-w-7xl 2xl:max-w-[100rem]">
+        {children}
+      </main>
     </div>
   );
 }

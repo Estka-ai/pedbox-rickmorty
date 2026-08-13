@@ -11,6 +11,7 @@ export function CharacterCard({ character }: { character: Character }) {
   return (
     <Link
       to={`/characters/${character.id}`}
+      title={character.name}
       className="flex items-center gap-3 rounded-lg border border-neutral-800 bg-neutral-900 p-3 transition hover:border-neutral-700 hover:bg-neutral-800 sm:flex-col sm:items-stretch sm:gap-0 sm:p-0 sm:overflow-hidden"
     >
       {character.image && (
