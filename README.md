@@ -142,7 +142,9 @@ Once finished, it leaves ~826 characters, ~126 locations, ~51 episodes, and the 
 
 With the backend running: **http://localhost:3000/api/docs**
 
-Includes the `auth` and `characters` endpoints, with an "Authorize" button to test protected routes by pasting the `access_token` obtained from `/auth/login`.
+Includes the `auth`, `characters`, `locations` and `episodes` endpoints, with an "Authorize" button to test protected routes by pasting the `access_token` obtained from `/auth/login`.
+
+`GET /characters` also supports sorting via `sortBy` (`id` | `name` | `status` | `species`) and `order` (`asc` | `desc`), on top of the `name`/`status` filters and pagination.
 
 ---
 
