@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { IngestModule } from './ingest/ingest.module';
 import { CharactersModule } from './characters/characters.module';
+import { LocationsModule } from './locations/locations.module';
+import { EpisodesModule } from './episodes/episodes.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -28,6 +30,8 @@ import { AuthModule } from './auth/auth.module';
     PrismaModule,
     IngestModule,
     CharactersModule,
+    LocationsModule,
+    EpisodesModule,
     UsersModule,
     AuthModule,
   ],
