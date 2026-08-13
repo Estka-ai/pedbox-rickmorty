@@ -1,13 +1,57 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider      = "prisma-client"
+  output        = "../generated/prisma"
+  moduleFormat  = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Location {
+  id        Int         @id
+  name      String
+  type      String?
+  dimension String?
+  originOf  Character[] @relation("origin")
+  currentOf Character[] @relation("current")
+}
+
+model Episode {
+  id         Int                @id
+  name       String
+  airDate    String?            @map("air_date")
+  code       String
+  characters CharacterEpisode[]
+}
+
+model Character {
+  id         Int                @id
+  name       String
+  status     String?
+  species    String?
+  gender     String?
+  image      String?
+  originId   Int?               @map("origin_id")
+  locationId Int?               @map("location_id")
+  origin     Location?          @relation("origin", fields: [originId], references: [id])
+  location   Location?          @relation("current", fields: [locationId], references: [id])
+  episodes   CharacterEpisode[]
+}
+
+model CharacterEpisode {
+  characterId Int       @map("character_id")
+  episodeId   Int       @map("episode_id")
+  character   Character @relation(fields: [characterId], references: [id])
+  episode     Episode   @relation(fields: [episodeId], references: [id])
+
+  @@id([characterId, episodeId])
+  @@map("character_episode")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
 }
