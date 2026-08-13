@@ -46,7 +46,7 @@ export function RegisterPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
             />
           </div>
 
@@ -62,7 +62,7 @@ export function RegisterPage() {
               autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
             />
             <p className="text-xs text-neutral-500">Mínimo 8 caracteres.</p>
           </div>
@@ -74,7 +74,7 @@ export function RegisterPage() {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-md bg-portal-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-portal-500 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {mutation.isPending ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
@@ -82,7 +82,7 @@ export function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-neutral-400">
           ¿Ya tenés cuenta?{' '}
-          <Link to="/login" className="text-emerald-500 hover:underline">
+          <Link to="/login" className="text-portal-500 hover:underline">
             Iniciá sesión
           </Link>
         </p>

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchShowcaseCharacters } from '../api/publicCharacters';
+import { PortalMark } from './PortalMark';
 
 function CharacterCollage() {
   const { data } = useQuery({
@@ -36,6 +37,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
       <div className="relative hidden flex-1 items-center justify-center overflow-hidden border-r border-neutral-900 bg-neutral-950 lg:flex">
         <CharacterCollage />
         <div className="relative z-10 max-w-sm rounded-2xl bg-neutral-950/70 px-10 py-8 text-center backdrop-blur-sm">
+          <PortalMark className="mx-auto mb-3 h-10 w-10" />
           <h2 className="text-3xl font-semibold tracking-tight">PedBox</h2>
           <p className="mt-3 text-neutral-300">
             Explorá personajes, ubicaciones y episodios de todo el multiverso
@@ -46,7 +48,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
 
       <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-12">
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(16,185,129,0.16)_0%,_rgba(16,185,129,0.05)_40%,_transparent_70%)]" />
+          <div className="h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(132,204,22,0.16)_0%,_rgba(132,204,22,0.05)_40%,_transparent_70%)]" />
         </div>
         <div className="relative z-10">{children}</div>
       </div>

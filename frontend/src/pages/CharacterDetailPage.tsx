@@ -4,6 +4,7 @@ import { getErrorMessage } from '../api/client';
 import { AppLayout } from '../components/AppLayout';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
+import { StatusBadge } from '../components/StatusBadge';
 
 export function CharacterDetailPage() {
   const params = useParams<{ id: string }>();
@@ -45,10 +46,12 @@ export function CharacterDetailPage() {
             <h1 className="text-xl font-semibold text-neutral-100">
               {data.name}
             </h1>
-            <p className="mt-1 text-sm text-neutral-400">
-              {data.status} · {data.species ?? 'unknown'} ·{' '}
-              {data.gender ?? 'unknown'}
-            </p>
+            <div className="mt-2 flex items-center gap-2 text-sm text-neutral-400">
+              <StatusBadge status={data.status} />
+              <span>
+                {data.species ?? 'unknown'} · {data.gender ?? 'unknown'}
+              </span>
+            </div>
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="rounded-lg border border-neutral-800 bg-neutral-900 p-3">
@@ -79,7 +82,7 @@ export function CharacterDetailPage() {
                     key={episode.id}
                     className="flex items-baseline gap-2 rounded-md border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm"
                   >
-                    <span className="font-mono text-xs text-emerald-500">
+                    <span className="font-mono text-xs text-portal-500">
                       {episode.code}
                     </span>
                     <span className="truncate text-neutral-300">

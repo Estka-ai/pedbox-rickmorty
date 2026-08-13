@@ -43,12 +43,12 @@ export function CharacterListPage() {
           placeholder="Buscar por nombre..."
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
-          className="flex-1 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+          className="flex-1 rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
         />
         <select
           value={status}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+          className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
         >
           {STATUS_OPTIONS.map((option) => (
             <option key={option} value={option}>
@@ -83,13 +83,16 @@ export function CharacterListPage() {
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="rounded-md border border-neutral-700 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full border border-neutral-700 px-4 py-1.5 font-medium transition hover:border-portal-700 hover:text-portal-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:text-neutral-400"
             >
-              Anterior
+              ← Anterior
             </button>
-            <span>
-              Página {data.meta.page} de {data.meta.totalPages} (
-              {data.meta.total} personajes)
+            <span className="text-neutral-500">
+              Página{' '}
+              <span className="font-semibold text-neutral-200">
+                {data.meta.page}
+              </span>{' '}
+              de {data.meta.totalPages} ({data.meta.total} personajes)
             </span>
             <button
               type="button"
@@ -97,9 +100,9 @@ export function CharacterListPage() {
                 setPage((p) => Math.min(data.meta.totalPages, p + 1))
               }
               disabled={page >= data.meta.totalPages}
-              className="rounded-md border border-neutral-700 px-3 py-1.5 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full border border-neutral-700 px-4 py-1.5 font-medium transition hover:border-portal-700 hover:text-portal-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:text-neutral-400"
             >
-              Siguiente
+              Siguiente →
             </button>
           </div>
         </>

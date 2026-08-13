@@ -50,7 +50,7 @@ export function LoginPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
             />
           </div>
 
@@ -65,7 +65,7 @@ export function LoginPage() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-emerald-600"
+              className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
             />
           </div>
 
@@ -76,7 +76,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-md bg-portal-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-portal-500 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {mutation.isPending ? 'Ingresando...' : 'Ingresar'}
           </button>
@@ -84,7 +84,7 @@ export function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-neutral-400">
           ¿No tenés cuenta?{' '}
-          <Link to="/register" className="text-emerald-500 hover:underline">
+          <Link to="/register" className="text-portal-500 hover:underline">
             Registrate
           </Link>
         </p>

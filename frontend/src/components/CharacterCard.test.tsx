@@ -28,7 +28,8 @@ describe('CharacterCard', () => {
     renderCard();
 
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
-    expect(screen.getByText(/Alive · Human/)).toBeInTheDocument();
+    expect(screen.getByText('Alive')).toBeInTheDocument();
+    expect(screen.getByText('Human')).toBeInTheDocument();
   });
 
   it('links to the character detail route', () => {
@@ -43,6 +44,6 @@ describe('CharacterCard', () => {
   it('falls back to "unknown" when species is missing', () => {
     renderCard({ species: null });
 
-    expect(screen.getByText(/Alive · unknown/)).toBeInTheDocument();
+    expect(screen.getByText('unknown')).toBeInTheDocument();
   });
 });

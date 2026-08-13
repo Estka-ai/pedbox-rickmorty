@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* "Portal" accent — the show's acid-green portal glow, not Tailwind's
+   default emerald. Gives the app its own identity instead of the
+   generic dark-theme-plus-emerald look every template ships with. */
+@theme {
+  --color-portal-50: #f7fee7;
+  --color-portal-100: #ecfccb;
+  --color-portal-200: #d9f99d;
+  --color-portal-300: #bef264;
+  --color-portal-400: #a3e635;
+  --color-portal-500: #84cc16;
+  --color-portal-600: #65a30d;
+  --color-portal-700: #4d7c0f;
+  --color-portal-800: #3f6212;
+  --color-portal-900: #365314;
+  --color-portal-950: #1a2e05;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
