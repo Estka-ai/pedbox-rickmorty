@@ -33,10 +33,14 @@ export class EpisodesService {
   }
 
   async findOne(id: number) {
-    const episode = await this.prisma.episode.findUnique({ where: { id } });
+    const episode = await this.prisma.episode.findUnique({
+      where: { id },
+      include: { characters: { include: { character: true } } },
+    });
     if (!episode) {
       throw new NotFoundException(`Episode with id ${id} not found`);
     }
-    return episode;
+    const { characters, ...rest } = episode;
+    return { ...rest, characters: characters.map((c) => c.character) };
   }
 }

@@ -33,10 +33,14 @@ export class LocationsService {
   }
 
   async findOne(id: number) {
-    const location = await this.prisma.location.findUnique({ where: { id } });
+    const location = await this.prisma.location.findUnique({
+      where: { id },
+      include: { currentOf: true },
+    });
     if (!location) {
       throw new NotFoundException(`Location with id ${id} not found`);
     }
-    return location;
+    const { currentOf, ...rest } = location;
+    return { ...rest, residents: currentOf };
   }
 }
