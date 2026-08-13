@@ -4,12 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { IngestModule } from './ingest/ingest.module';
+import { CharactersModule } from './characters/characters.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
     IngestModule,
+    CharactersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
