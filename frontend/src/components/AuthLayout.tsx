@@ -44,8 +44,11 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-4 py-12">
-        {children}
+      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-12">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(16,185,129,0.16)_0%,_rgba(16,185,129,0.05)_40%,_transparent_70%)]" />
+        </div>
+        <div className="relative z-10">{children}</div>
       </div>
     </div>
   );
