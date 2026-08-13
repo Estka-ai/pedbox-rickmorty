@@ -5,6 +5,7 @@ import { AppLayout } from '../components/AppLayout';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { CharacterCard } from '../components/CharacterCard';
+import { PaginationControls } from '../components/PaginationControls';
 import type { SortableField, SortOrder } from '../api/types';
 
 const PAGE_SIZE = 20;
@@ -120,33 +121,11 @@ export function CharacterListPage() {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between text-sm text-neutral-400">
-            <button
-              type="button"
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page <= 1}
-              className="rounded-full border border-neutral-700 px-4 py-1.5 font-medium transition hover:border-portal-700 hover:text-portal-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:text-neutral-400"
-            >
-              ← Anterior
-            </button>
-            <span className="text-neutral-500">
-              Página{' '}
-              <span className="font-semibold text-neutral-200">
-                {data.meta.page}
-              </span>{' '}
-              de {data.meta.totalPages} ({data.meta.total} personajes)
-            </span>
-            <button
-              type="button"
-              onClick={() =>
-                setPage((p) => Math.min(data.meta.totalPages, p + 1))
-              }
-              disabled={page >= data.meta.totalPages}
-              className="rounded-full border border-neutral-700 px-4 py-1.5 font-medium transition hover:border-portal-700 hover:text-portal-400 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-700 disabled:hover:text-neutral-400"
-            >
-              Siguiente →
-            </button>
-          </div>
+          <PaginationControls
+            meta={data.meta}
+            itemLabel="personajes"
+            onPageChange={setPage}
+          />
         </>
       )}
     </AppLayout>

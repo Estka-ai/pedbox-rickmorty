@@ -29,6 +29,14 @@ export interface CharacterDetail extends Character {
   episodes: EpisodeSummary[];
 }
 
+export interface LocationDetail extends LocationSummary {
+  residents: Character[];
+}
+
+export interface EpisodeDetail extends EpisodeSummary {
+  characters: Character[];
+}
+
 export interface PaginationMeta {
   page: number;
   limit: number;
@@ -51,4 +59,10 @@ export interface FindCharactersParams {
   status?: string;
   sortBy?: SortableField;
   order?: SortOrder;
+}
+
+export interface FindListParams {
+  page?: number;
+  limit?: number;
+  name?: string;
 }

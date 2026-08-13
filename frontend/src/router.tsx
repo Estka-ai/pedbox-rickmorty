@@ -4,6 +4,10 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { CharacterListPage } from './pages/CharacterListPage';
 import { CharacterDetailPage } from './pages/CharacterDetailPage';
+import { LocationsListPage } from './pages/LocationsListPage';
+import { LocationDetailPage } from './pages/LocationDetailPage';
+import { EpisodesListPage } from './pages/EpisodesListPage';
+import { EpisodeDetailPage } from './pages/EpisodeDetailPage';
 
 export function AppRouter() {
   return (
@@ -23,6 +27,38 @@ export function AppRouter() {
         element={
           <RequireAuth>
             <CharacterDetailPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/locations"
+        element={
+          <RequireAuth>
+            <LocationsListPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/locations/:id"
+        element={
+          <RequireAuth>
+            <LocationDetailPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/episodes"
+        element={
+          <RequireAuth>
+            <EpisodesListPage />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/episodes/:id"
+        element={
+          <RequireAuth>
+            <EpisodeDetailPage />
           </RequireAuth>
         }
       />
