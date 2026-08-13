@@ -12,6 +12,8 @@ export function fetchCharacters(params: FindCharactersParams) {
   if (params.limit) query.set('limit', String(params.limit));
   if (params.name) query.set('name', params.name);
   if (params.status) query.set('status', params.status);
+  if (params.sortBy) query.set('sortBy', params.sortBy);
+  if (params.order) query.set('order', params.order);
 
   const qs = query.toString();
   return apiFetch<PaginatedResponse<Character>>(

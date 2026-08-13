@@ -41,9 +41,14 @@ export interface PaginatedResponse<T> {
   meta: PaginationMeta;
 }
 
+export type SortableField = 'id' | 'name' | 'status' | 'species';
+export type SortOrder = 'asc' | 'desc';
+
 export interface FindCharactersParams {
   page?: number;
   limit?: number;
   name?: string;
   status?: string;
+  sortBy?: SortableField;
+  order?: SortOrder;
 }

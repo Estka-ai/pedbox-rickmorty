@@ -5,14 +5,34 @@ import { AppLayout } from '../components/AppLayout';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { CharacterCard } from '../components/CharacterCard';
+import type { SortableField, SortOrder } from '../api/types';
 
 const PAGE_SIZE = 20;
 const STATUS_OPTIONS = ['', 'Alive', 'Dead', 'unknown'] as const;
+
+const SORT_OPTIONS: {
+  value: string;
+  label: string;
+  sortBy: SortableField;
+  order: SortOrder;
+}[] = [
+  { value: 'id-asc', label: 'Orden por defecto', sortBy: 'id', order: 'asc' },
+  { value: 'name-asc', label: 'Nombre (A-Z)', sortBy: 'name', order: 'asc' },
+  { value: 'name-desc', label: 'Nombre (Z-A)', sortBy: 'name', order: 'desc' },
+  { value: 'status-asc', label: 'Estado (A-Z)', sortBy: 'status', order: 'asc' },
+  {
+    value: 'species-asc',
+    label: 'Especie (A-Z)',
+    sortBy: 'species',
+    order: 'asc',
+  },
+];
 
 export function CharacterListPage() {
   const [nameInput, setNameInput] = useState('');
   const [name, setName] = useState('');
   const [status, setStatus] = useState('');
+  const [sortValue, setSortValue] = useState(SORT_OPTIONS[0].value);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -28,11 +48,22 @@ export function CharacterListPage() {
     setPage(1);
   }
 
+  function handleSortChange(value: string) {
+    setSortValue(value);
+    setPage(1);
+  }
+
+  const selectedSort =
+    SORT_OPTIONS.find((option) => option.value === sortValue) ??
+    SORT_OPTIONS[0];
+
   const { data, isLoading, isError, error, refetch } = useCharacters({
     page,
     limit: PAGE_SIZE,
     name: name || undefined,
     status: status || undefined,
+    sortBy: selectedSort.sortBy,
+    order: selectedSort.order,
   });
 
   return (
@@ -53,6 +84,17 @@ export function CharacterListPage() {
           {STATUS_OPTIONS.map((option) => (
             <option key={option} value={option}>
               {option === '' ? 'Todos los estados' : option}
+            </option>
+          ))}
+        </select>
+        <select
+          value={sortValue}
+          onChange={(e) => handleSortChange(e.target.value)}
+          className="rounded-md border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm outline-none focus:border-portal-600"
+        >
+          {SORT_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </select>
