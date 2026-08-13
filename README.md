@@ -176,4 +176,7 @@ npm test
 
 ## Deploy
 
-Not deployed (out of scope for this submission). The project runs fully locally with `docker compose up`.
+- **Frontend (Vercel):** https://pedbox-rickmorty.vercel.app
+- **Backend API (Railway):** https://backend-production-7e94b.up.railway.app — Swagger docs at `/api/docs`
+
+The production database is seeded with the full ingest (826 characters, 126 locations, 51 episodes). Register a new account on the live site to try it out.
