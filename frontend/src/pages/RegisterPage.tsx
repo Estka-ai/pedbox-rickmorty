@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { registerRequest } from '../api/auth';
 import { getErrorMessage } from '../api/client';
+import { AuthLayout } from '../components/AuthLayout';
 import { ErrorState } from '../components/ErrorState';
 
 export function RegisterPage() {
@@ -26,7 +27,7 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4 text-neutral-100">
+    <AuthLayout>
       <div className="w-full max-w-sm">
         <h1 className="mb-1 text-xl font-semibold">Crear cuenta</h1>
         <p className="mb-6 text-sm text-neutral-400">
@@ -86,6 +87,6 @@ export function RegisterPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

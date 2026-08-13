@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { loginRequest } from '../api/auth';
 import { getErrorMessage } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
+import { AuthLayout } from '../components/AuthLayout';
 import { ErrorState } from '../components/ErrorState';
 
 export function LoginPage() {
@@ -30,7 +31,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-950 px-4 text-neutral-100">
+    <AuthLayout>
       <div className="w-full max-w-sm">
         <h1 className="mb-1 text-xl font-semibold">Iniciar sesión</h1>
         <p className="mb-6 text-sm text-neutral-400">
@@ -88,6 +89,6 @@ export function LoginPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
