@@ -19,12 +19,15 @@ export class CharactersService {
       where.status = query.status;
     }
 
+    const sortBy = query.sortBy ?? 'id';
+    const order = query.order ?? 'asc';
+
     const [data, total] = await Promise.all([
       this.prisma.character.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
-        orderBy: { id: 'asc' },
+        orderBy: { [sortBy]: order },
       }),
       this.prisma.character.count({ where }),
     ]);

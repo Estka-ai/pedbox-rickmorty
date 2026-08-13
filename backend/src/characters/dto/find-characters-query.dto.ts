@@ -3,6 +3,8 @@ import { Type } from 'class-transformer';
 import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
 const VALID_STATUSES = ['Alive', 'Dead', 'unknown'] as const;
+const SORTABLE_FIELDS = ['id', 'name', 'status', 'species'] as const;
+const SORT_ORDERS = ['asc', 'desc'] as const;
 
 export class FindCharactersQueryDto {
   @ApiPropertyOptional({ minimum: 1, default: 1 })
@@ -29,4 +31,14 @@ export class FindCharactersQueryDto {
   @IsOptional()
   @IsIn(VALID_STATUSES)
   status?: (typeof VALID_STATUSES)[number];
+
+  @ApiPropertyOptional({ enum: SORTABLE_FIELDS, default: 'id' })
+  @IsOptional()
+  @IsIn(SORTABLE_FIELDS)
+  sortBy?: (typeof SORTABLE_FIELDS)[number] = 'id';
+
+  @ApiPropertyOptional({ enum: SORT_ORDERS, default: 'asc' })
+  @IsOptional()
+  @IsIn(SORT_ORDERS)
+  order?: (typeof SORT_ORDERS)[number] = 'asc';
 }

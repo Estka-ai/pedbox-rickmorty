@@ -65,6 +65,33 @@ describe('CharactersService', () => {
         }),
       );
     });
+
+    it('defaults to sorting by id asc when no sort options are given', async () => {
+      prisma.character.findMany.mockResolvedValue([]);
+      prisma.character.count.mockResolvedValue(0);
+
+      await service.findAll({ page: 1, limit: 20 });
+
+      expect(prisma.character.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { id: 'asc' } }),
+      );
+    });
+
+    it('sorts by the requested field and order', async () => {
+      prisma.character.findMany.mockResolvedValue([]);
+      prisma.character.count.mockResolvedValue(0);
+
+      await service.findAll({
+        page: 1,
+        limit: 20,
+        sortBy: 'name',
+        order: 'desc',
+      });
+
+      expect(prisma.character.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { name: 'desc' } }),
+      );
+    });
   });
 
   describe('findOne', () => {
