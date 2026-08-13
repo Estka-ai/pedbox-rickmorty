@@ -5,6 +5,16 @@ import { AppLayout } from '../components/AppLayout';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { StatusBadge } from '../components/StatusBadge';
+import type { EpisodeSummary } from '../api/types';
+
+function groupEpisodesBySeason(episodes: EpisodeSummary[]) {
+  const seasons = new Map<string, EpisodeSummary[]>();
+  for (const episode of episodes) {
+    const season = episode.code.match(/^S\d+/)?.[0] ?? 'Otros';
+    seasons.set(season, [...(seasons.get(season) ?? []), episode]);
+  }
+  return [...seasons.entries()];
+}
 
 export function CharacterDetailPage() {
   const params = useParams<{ id: string }>();
@@ -73,24 +83,38 @@ export function CharacterDetailPage() {
             </div>
 
             <div className="mt-4">
-              <p className="mb-2 text-xs uppercase tracking-wide text-neutral-500">
+              <p className="mb-3 text-xs uppercase tracking-wide text-neutral-500">
                 Episodios ({data.episodes.length})
               </p>
-              <ul className="flex flex-col gap-1.5">
-                {data.episodes.map((episode) => (
-                  <li
-                    key={episode.id}
-                    className="flex items-baseline gap-2 rounded-md border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm"
-                  >
-                    <span className="font-mono text-xs text-portal-500">
-                      {episode.code}
-                    </span>
-                    <span className="truncate text-neutral-300">
-                      {episode.name}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-4">
+                {groupEpisodesBySeason(data.episodes).map(
+                  ([season, episodes]) => (
+                    <div key={season}>
+                      <p className="mb-2 text-sm font-semibold text-neutral-200">
+                        Temporada {Number(season.slice(1)) || season}
+                        <span className="ml-1.5 text-xs font-normal text-neutral-500">
+                          ({episodes.length})
+                        </span>
+                      </p>
+                      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
+                        {episodes.map((episode) => (
+                          <div
+                            key={episode.id}
+                            className="flex items-baseline gap-2 rounded-md border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-sm"
+                          >
+                            <span className="font-mono text-xs text-portal-500">
+                              {episode.code}
+                            </span>
+                            <span className="truncate text-neutral-300">
+                              {episode.name}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </div>
