@@ -1,28 +1,28 @@
 # PedBox — Rick and Morty
 
-Prueba técnica full stack: ingesta y normalización de la [Rick and Morty API](https://rickandmortyapi.com/api) en PostgreSQL, API REST propia (NestJS + Prisma) protegida con JWT, y frontend React mobile-first (Vite + TanStack Query + Tailwind).
+Full stack technical assessment: ingesting and normalizing the [Rick and Morty API](https://rickandmortyapi.com/api) into PostgreSQL, a custom REST API (NestJS + Prisma) protected with JWT, and a mobile-first React frontend (Vite + TanStack Query + Tailwind).
 
 ## Stack
 
 **Backend**
 - NestJS + TypeScript
 - Prisma ORM + PostgreSQL (driver adapter `@prisma/adapter-pg`)
-- `@nestjs/jwt` + `passport-jwt` + `bcrypt` (autenticación)
+- `@nestjs/jwt` + `passport-jwt` + `bcrypt` (authentication)
 - `class-validator` + `class-transformer` (DTOs)
-- Swagger (`@nestjs/swagger`) en `/api/docs`
-- Logs estructurados con Pino (`nestjs-pino`)
+- Swagger (`@nestjs/swagger`) at `/api/docs`
+- Structured logging with Pino (`nestjs-pino`)
 
 **Frontend**
 - React + TypeScript + Vite
 - React Router
-- TanStack Query (loading/error states + caché)
+- TanStack Query (loading/error states + caching)
 - Tailwind CSS (mobile-first)
 
 **Infra**
-- Docker Compose (Postgres + backend + frontend, un solo comando)
+- Docker Compose (Postgres + backend + frontend, single command)
 - Jest (backend) + Vitest/React Testing Library (frontend)
 
-## Estructura
+## Structure
 
 ```
 pedbox-rickmorty/
@@ -31,47 +31,47 @@ pedbox-rickmorty/
 └── frontend/    # React SPA
 ```
 
-Dentro de `backend/src/`: `prisma/` (PrismaService global), `ingest/` (sincronización con la API externa), `characters/`, `auth/`, `users/`, `common/` (filtro de excepciones global).
+Inside `backend/src/`: `prisma/` (global PrismaService), `ingest/` (sync with the external API), `characters/`, `auth/`, `users/`, `common/` (global exception filter).
 
-Dentro de `frontend/src/`: `api/` (cliente HTTP + hooks de TanStack Query), `auth/` (contexto de sesión, guard de rutas), `pages/`, `components/`.
+Inside `frontend/src/`: `api/` (HTTP client + TanStack Query hooks), `auth/` (session context, route guard), `pages/`, `components/`.
 
 ---
 
-## Instalación y ejecución
+## Installation and running
 
-### Opción A — Docker Compose (recomendado, un solo comando)
+### Option A — Docker Compose (recommended, single command)
 
-Requiere Docker y Docker Compose. Desde la raíz del repo:
+Requires Docker and Docker Compose. From the repo root:
 
 ```bash
 docker compose up -d --build
 ```
 
-Esto levanta:
-- **Postgres** en `localhost:5432`
-- **Backend** (NestJS) en `http://localhost:3000` — corre las migraciones de Prisma automáticamente al arrancar
-- **Frontend** (React) en `http://localhost:5173`
+This starts:
+- **Postgres** on `localhost:5432`
+- **Backend** (NestJS) on `http://localhost:3000` — runs Prisma migrations automatically on startup
+- **Frontend** (React) on `http://localhost:5173`
 
-No hace falta crear ningún `.env`: las variables para este modo están definidas directamente en `docker-compose.yml` (son valores de desarrollo, no secretos reales).
+No `.env` file is needed for this mode: the variables are defined directly in `docker-compose.yml` (development values, not real secrets).
 
-Para poblar la base de datos con la data de la Rick and Morty API (ver sección "Poblar la base de datos" más abajo):
+To seed the database with data from the Rick and Morty API (see "Seeding the database" below):
 
 ```bash
 docker compose exec backend node dist/src/ingest/run-ingest.js
 ```
 
-Para bajar todo:
+To stop everything:
 
 ```bash
-docker compose down        # conserva los datos (volumen de Postgres)
-docker compose down -v     # borra también los datos
+docker compose down        # keeps the data (Postgres volume)
+docker compose down -v     # also deletes the data
 ```
 
-### Opción B — Desarrollo local (sin Docker para backend/frontend)
+### Option B — Local development (no Docker for backend/frontend)
 
-Requiere Node.js 22+ y Docker (solo para Postgres).
+Requires Node.js 22+ and Docker (for Postgres only).
 
-**1. Levantar Postgres:**
+**1. Start Postgres:**
 
 ```bash
 docker compose up -d postgres
@@ -81,19 +81,19 @@ docker compose up -d postgres
 
 ```bash
 cd backend
-cp .env.example .env      # completar si hace falta (los defaults ya apuntan a Postgres local)
+cp .env.example .env      # fill in if needed (defaults already point to local Postgres)
 npm install
-npx prisma migrate dev    # crea las tablas (solo la primera vez / tras cambios de schema)
+npx prisma migrate dev    # creates the tables (first run / after schema changes)
 npm run start:dev         # http://localhost:3000
 ```
 
-**3. Poblar la base de datos:**
+**3. Seed the database:**
 
 ```bash
 npm run ingest
 ```
 
-**4. Frontend** (en otra terminal):
+**4. Frontend** (in another terminal):
 
 ```bash
 cd frontend
@@ -104,58 +104,58 @@ npm run dev                # http://localhost:5173
 
 ---
 
-## Variables de entorno
+## Environment variables
 
-Ver `backend/.env.example` y `frontend/.env.example`. El `.env` real nunca se commitea (está en `.gitignore`).
+See `backend/.env.example` and `frontend/.env.example`. The real `.env` is never committed (it's in `.gitignore`).
 
 **`backend/.env`**
 
-| Variable | Descripción |
+| Variable | Description |
 |---|---|
-| `DATABASE_URL` | Connection string de PostgreSQL |
-| `JWT_SECRET` | Secreto para firmar los JWT (nunca hardcodeado en el código) |
-| `JWT_EXPIRES_IN` | Expiración del token (ej. `1h`) |
-| `PORT` | Puerto del backend |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `JWT_SECRET` | Secret used to sign JWTs (never hardcoded in the code) |
+| `JWT_EXPIRES_IN` | Token expiration (e.g. `1h`) |
+| `PORT` | Backend port |
 
 **`frontend/.env`**
 
-| Variable | Descripción |
+| Variable | Description |
 |---|---|
-| `VITE_API_URL` | URL base del backend que consume el frontend |
+| `VITE_API_URL` | Base URL of the backend consumed by the frontend |
 
 ---
 
-## Poblar la base de datos (ingesta)
+## Seeding the database (ingest)
 
-El comando de ingesta consume la Rick and Morty API completa (siguiendo la paginación real), normaliza los datos y hace `upsert` por `id` (es **idempotente**: correrlo más de una vez no duplica filas).
+The ingest command consumes the full Rick and Morty API (following the real pagination), normalizes the data and `upsert`s by `id` (it is **idempotent**: running it more than once does not duplicate rows).
 
-Orden de ingesta: `locations → episodes → characters → character_episode`.
+Ingest order: `locations → episodes → characters → character_episode`.
 
-- **Con Docker:** `docker compose exec backend node dist/src/ingest/run-ingest.js`
-- **Local:** `npm run ingest` (desde `backend/`)
+- **With Docker:** `docker compose exec backend node dist/src/ingest/run-ingest.js`
+- **Local:** `npm run ingest` (from `backend/`)
 
-Al terminar deja pobladas ~826 characters, ~126 locations, ~51 episodes y las filas de relación en `character_episode`.
+Once finished, it leaves ~826 characters, ~126 locations, ~51 episodes, and the relation rows in `character_episode`.
 
 ---
 
-## Documentación de la API (Swagger)
+## API documentation (Swagger)
 
-Con el backend corriendo: **http://localhost:3000/api/docs**
+With the backend running: **http://localhost:3000/api/docs**
 
-Incluye los endpoints de `auth` y `characters`, con el botón "Authorize" para probar las rutas protegidas pegando el `access_token` obtenido en `/auth/login`.
+Includes the `auth` and `characters` endpoints, with an "Authorize" button to test protected routes by pasting the `access_token` obtained from `/auth/login`.
 
 ---
 
 ## Tests
 
-**Backend** (Jest — tests unitarios de `AuthService` y `CharactersService` con Prisma mockeado):
+**Backend** (Jest — unit tests for `AuthService` and `CharactersService` with Prisma mocked):
 
 ```bash
 cd backend
 npm test
 ```
 
-**Frontend** (Vitest + React Testing Library — tests de `ErrorState` y `CharacterCard`):
+**Frontend** (Vitest + React Testing Library — tests for `ErrorState` and `CharacterCard`):
 
 ```bash
 cd frontend
@@ -164,14 +164,14 @@ npm test
 
 ---
 
-## Notas de arquitectura
+## Architecture notes
 
-- La ingesta usa el **id de la API externa como PK** de `Location`, `Episode` y `Character`, lo que hace el `upsert` natural e idempotente.
-- Todas las rutas de `characters` están protegidas con `JwtAuthGuard`; `auth/register` y `auth/login` son públicas.
-- El filtro de excepciones global (`common/filters/all-exceptions.filter.ts`) asegura que todos los errores (validación, 404, 401, 500) salgan con una forma consistente, sin stack traces crudos.
-- Los logs de Pino redactan `Authorization` y `password` — nunca se loguean credenciales ni tokens.
-- El frontend adjunta el JWT automáticamente a cada request y, ante un `401` del backend (token vencido o inválido), limpia la sesión y redirige a `/login` sin dejar la pantalla colgada.
+- The ingest uses the **external API's id as the PK** of `Location`, `Episode` and `Character`, which makes the `upsert` natural and idempotent.
+- All `characters` routes are protected with `JwtAuthGuard`; `auth/register` and `auth/login` are public.
+- The global exception filter (`common/filters/all-exceptions.filter.ts`) ensures every error (validation, 404, 401, 500) comes back in a consistent shape, without raw stack traces.
+- Pino logs redact `Authorization` and `password` — credentials and tokens are never logged.
+- The frontend automatically attaches the JWT to every request and, on a `401` from the backend (expired or invalid token), clears the session and redirects to `/login` instead of leaving the screen stuck.
 
 ## Deploy
 
-No desplegado (fuera del alcance de esta entrega). El proyecto corre completo en local con `docker compose up`.
+Not deployed (out of scope for this submission). The project runs fully locally with `docker compose up`.
