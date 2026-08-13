@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
-import { PortalMark } from './PortalMark';
 
 const NAV_LINKS = [
   { to: '/characters', label: 'Personajes' },
   { to: '/locations', label: 'Ubicaciones' },
   { to: '/episodes', label: 'Episodios' },
 ];
+
+const CONTAINER = 'mx-auto max-w-5xl px-4 xl:max-w-7xl 2xl:max-w-[100rem]';
 
 export function AppLayout({ children }: { children: ReactNode }) {
   const { logout } = useAuth();
@@ -21,9 +22,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <header className="sticky top-0 z-10 border-b border-neutral-800 bg-neutral-950/95 backdrop-blur">
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className={`flex items-center justify-between py-3 ${CONTAINER}`}>
           <span className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-            <PortalMark className="h-6 w-6" />
+            <img src="/favicon-96.png" alt="" className="h-7 w-7 rounded-full" />
             PedBox — Rick and Morty
           </span>
           <button
@@ -34,7 +35,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
             Cerrar sesión
           </button>
         </div>
-        <nav className="flex gap-1 overflow-x-auto px-4 pb-2">
+        <nav className={`flex gap-1 overflow-x-auto pb-2 ${CONTAINER}`}>
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
@@ -52,9 +53,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
           ))}
         </nav>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-4 xl:max-w-7xl 2xl:max-w-[100rem]">
-        {children}
-      </main>
+      <main className={`py-4 ${CONTAINER}`}>{children}</main>
     </div>
   );
 }
