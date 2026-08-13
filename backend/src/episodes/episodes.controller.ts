@@ -1,4 +1,13 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseGuards } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EpisodesService } from './episodes.service';
 import { FindEpisodesQueryDto } from './dto/find-episodes-query.dto';
@@ -8,6 +17,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @ApiBearerAuth()
 @Controller('episodes')
 @UseGuards(JwtAuthGuard)
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(30_000)
 export class EpisodesController {
   constructor(private readonly episodesService: EpisodesService) {}
 

@@ -1,10 +1,15 @@
 import {
+  CacheInterceptor,
+  CacheTTL,
+} from '@nestjs/cache-manager';
+import {
   Controller,
   Get,
   Param,
   ParseIntPipe,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CharactersService } from './characters.service';
@@ -15,6 +20,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @ApiBearerAuth()
 @Controller('characters')
 @UseGuards(JwtAuthGuard)
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(30_000)
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
